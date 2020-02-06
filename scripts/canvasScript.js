@@ -124,7 +124,7 @@ window.requestAnimationFrame(function clocker()
     if(gameState === 'playing' || gameState === 'playingRight' )
     {
         ctx.beginPath();
-        ctx.rect(370, 0, 100, 40);
+        ctx.rect(370, 0, 130, 40);
         ctx.fillStyle = "#000000";
         ctx.fill();
         ctx.closePath();
