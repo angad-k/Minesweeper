@@ -1,59 +1,151 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var a1 = new Array(8);
+var flagChecker = new Array(8);
 var img = new Image();
 img.src = "sprites/bum.png";
-for (var i = 0; i < a1.length; i++) {
-    a1[i] = new Array(8);
-}
-for(i = 1; i <= 8; i++)
+var flag = new Image();
+flag.src = "sprites/red.png";
+var flagun = new Image();
+flagun.src = "sprites/redun.png";
+var reload = new Image();
+reload.src = "sprites/okGhoomer.jpg";
+var timeO;
+var gameState = 'menu';
+var checked;
+var flagsrem;
+function startGame()
 {
-    for(j = 1; j<=8; j++)
+    checked = 0;
+    flagsrem = 10;
+    var today = new Date();
+    timeO = today.getHours()*3600 + today.getMinutes()*60 + today.getSeconds(); 
+    ctx.beginPath();
+    ctx.rect(0, 0, 500, 500);
+    ctx.fillStyle = "#000000";
+    ctx.fill();
+    ctx.closePath();
+    console.log("REACHED");
+    for (var i = 0; i < a1.length; i++) {
+        a1[i] = new Array(8);
+        flagChecker[i] = new Array(8);
+        
+    }
+    
+    for(i = 1; i <= 8; i++)
+    {
+        for(j = 1; j<=8; j++)
+        {
+            ctx.beginPath();
+            ctx.rect(50*i, 50*j, 45, 45);
+            ctx.fillStyle = "#FF0000";
+            ctx.fill();
+            ctx.closePath();
+            a1[i-1][j-1] = 0;
+            flagChecker[i-1][j-1] = 0;
+        }
+    }
+    
+    for(k = 1; k <= 10; k++)
+    {
+     i = parseInt((Math.random())*7);
+     console.log(i);
+     j = parseInt((Math.random())*7);
+     console.log(j);
+     if(a1[i][j] == 100)
+     {
+         k--;
+     }
+     else
+     {
+        a1[i][j] = 100;
+        console.log(a1[i][j]);
+        try{a1[i+1][j-1]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i+1][j]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i-1][j]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i][j+1]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i][j-1]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i+1][j+1]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i-1][j+1]++;}catch(e){//kuch nai karega ja.
+        }
+        try{a1[i-1][j-1]++;}catch(e){//kuch nai karega ja.
+        }    
+     }
+    }
+    ctx.beginPath();
+    ctx.drawImage(flagun, 400, 450, 45, 45);  
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.drawImage(reload, 350, 450, 45, 45);  
+    ctx.closePath();
+}
+function startMenu()
+{  
+    ctx.beginPath();
+    ctx.rect(100, 225, 300, 50);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(100, 300, 300, 50);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "#000000";
+    ctx.fillText('Start', 200, 262.5);
+    ctx.closePath();
+    gameState = "menu";
+}
+
+function success()
+{
+    var today = new Date();
+    var timenow = today.getHours()*3600 + today.getMinutes()*60 + today.getSeconds();
+    var timediff = timenow - timeO;
+    ctx.beginPath();
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Badhai ho!!!", 100,40);
+    
+}
+
+window.requestAnimationFrame(function clocker()
+{
+    if(gameState === 'playing' || gameState === 'playingRight' )
     {
         ctx.beginPath();
-        ctx.rect(50*i, 50*j, 45, 45);
-        ctx.fillStyle = "#FF0000";
+        ctx.rect(370, 0, 100, 40);
+        ctx.fillStyle = "#000000";
         ctx.fill();
         ctx.closePath();
-        a1[i-1][j-1] = 0;
+        var today = new Date();
+        var timenow = today.getHours()*3600 + today.getMinutes()*60 + today.getSeconds();
+        var timediff = timenow - timeO;
+        ctx.beginPath();
+        ctx.font = "40px Arial";
+        ctx.fillStyle = "#ffffff";
+        var mint = parseInt(timediff/60);
+        var sec = timediff%60;
+        ctx.fillText(mint + " : " + sec, 370,40);
+       
     }
-}
-
-for(k = 1; k <= 10; k++)
-{
- i = parseInt((Math.random())*7);
- console.log(i);
- j = parseInt((Math.random())*7);
- console.log(j);
- if(a1[i][j] == 100)
- {
-     k--;
- }
- else
- {
-    a1[i][j] = 100;
-    console.log(a1[i][j]);
-    try{a1[i+1][j-1]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i+1][j]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i-1][j]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i][j+1]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i][j-1]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i+1][j+1]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i-1][j+1]++;}catch(e){//kuch nai karega ja.
-    }
-    try{a1[i-1][j-1]++;}catch(e){//kuch nai karega ja.
-    }
+    window.requestAnimationFrame(clocker);
+});
 
 
-    
- }
-}
+
+
+
 
 canvas.addEventListener("mousedown", function(e) 
 { 
@@ -64,59 +156,144 @@ canvas.addEventListener("mousedown", function(e)
     console.log(ix);
     var jx = parseInt((y - 1)/50);
     console.log(jx);
-    if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
+    
+    switch(gameState)
     {
-        if(a1[ix - 1][jx - 1] >= 100)
+    
+     case 'menu' :
+         if(x >= 100 && x <= 400 && y >= 225 && y <= 275)
+         {
+             startGame();
+             gameState = 'playing';             
+         }
+
+         break;
+        
+    
+     case 'playing' :
+        if(x >= 400 && x <= 445 && y >= 450 && y <= 495)
         {
-            for(ix = 1; ix <= 8; ix++)
+            gameState = 'playingRight';
+            ctx.beginPath();
+            ctx.drawImage(flag, 400, 450, 45, 45);    
+            ctx.closePath();
+        }
+        if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+        {
+            startGame();
+        }
+        if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
+        {
+            if(a1[ix - 1][jx - 1] >= 100)
             {
-                for(jx = 1; jx <= 8; jx++)
+                for(ix = 1; ix <= 8; ix++)
                 {
-                    if(a1[ix - 1][jx - 1] >= 100)
+                    for(jx = 1; jx <= 8; jx++)
                     {
-                        ctx.beginPath();
-                        ctx.rect(50*ix, 50*jx, 45, 45);
-                        ctx.fillStyle = "#000000";
-                        console.log("ithe");
-                        ctx.fill();
-                        ctx.closePath();
-                        ctx.drawImage(img, 50*ix, 50*jx, 45, 45);
-                    }
-                    else
-                    {
-                        ctx.beginPath();
-                        ctx.rect(50*ix, 50*jx, 45, 45);
-                        ctx.fillStyle = "#000000";
-                        console.log("tithe");
-                        ctx.fill();
-                        ctx.font = "45px Arial";
-                        ctx.fillStyle = "#ffffff"
-                        ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
-                        ctx.closePath();
+                        if(a1[ix - 1][jx - 1] >= 100)
+                        {
+                            ctx.beginPath();
+                            ctx.rect(50*ix, 50*jx, 45, 45);
+                            ctx.fillStyle = "#000000";
+                            console.log("ithe");
+                            ctx.fill();
+                            ctx.closePath();
+                            ctx.drawImage(img, 50*ix, 50*jx, 45, 45);
+                            gameState = "failure";
+                        }
+                        else
+                        {
+                            ctx.beginPath();
+                            ctx.rect(50*ix, 50*jx, 45, 45);
+                            ctx.fillStyle = "#000000";
+                            console.log("tithe");
+                            ctx.fill();
+                            ctx.font = "45px Arial";
+                            ctx.fillStyle = "#ffffff"
+                            ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
+                            ctx.closePath();
+                            
+                        }
                     }
                 }
             }
-            ctx.beginPath();
-            ctx.rect(50*ix, 50*jx, 45, 45);
-            ctx.fillStyle = "#000000";
-            console.log("ithe");
-            ctx.fill();
-            ctx.closePath();
-            ctx.drawImage(img, 50*ix, 50*jx, 45, 45);
-        }
-        else
-        {
-            ctx.beginPath();
-            ctx.rect(50*ix, 50*jx, 45, 45);
-            ctx.fillStyle = "#000000";
-            console.log("tithe");
-            ctx.fill();
-            ctx.font = "45px Arial";
-            ctx.fillStyle = "#ffffff"
-            ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
-            ctx.closePath();
-        }
+            else
+            {
+                ctx.beginPath();
+                ctx.rect(50*ix, 50*jx, 45, 45);
+                ctx.fillStyle = "#000000";
+                console.log("tithe");
+                ctx.fill();
+                ctx.font = "45px Arial";
+                ctx.fillStyle = "#ffffff"
+                ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
+                ctx.closePath();
+                checked++;
+                if(checked == 54)
+                {
+                    gameState = "success";
+                    success();
+                }
+            }
         
+        }
+        break;
+        case 'playingRight' :
+            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+            {
+                startGame();
+            }
+            if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
+            {
+                if(flagChecker[ix - 1][jx - 1] == 0)
+                {
+                    if(flagsrem == 0)
+                    {
+                        break;
+                    }
+                    ctx.beginPath();
+                    ctx.rect(50*ix, 50*jx, 45, 45);
+                    ctx.fillStyle = "#000000";
+                    console.log("ithe");
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.drawImage(flag, 50*ix, 50*jx, 45, 45);
+                    flagChecker[ix - 1][jx - 1] = 1;
+                    flagsrem--;
+                    break;
+                }
+                else
+                {
+                    
+                    ctx.beginPath();
+                    ctx.rect(50*ix, 50*jx, 45, 45);
+                    ctx.fillStyle = "#FF0000";
+                    ctx.fill();
+                    ctx.closePath();
+                    flagChecker[ix - 1][jx - 1] = 0;
+                    flagsrem++;
+                    
+                    break;
+                }
+                
+            }
+            if(x >= 400 && x <= 445 && y >= 450 && y <= 495)
+            {
+                gameState = 'playing';
+                ctx.beginPath();
+                ctx.drawImage(flagun, 400, 450, 45, 45);    
+                ctx.closePath();
+            }
+            break;
+
+        case 'failure' :
+            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+            {
+                startGame();
+                gameState = 'playing';
+            }
+            break;
+            
     }
     
 }); 
