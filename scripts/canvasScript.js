@@ -10,6 +10,8 @@ var flagun = new Image();
 flagun.src = "sprites/redun.png";
 var reload = new Image();
 reload.src = "sprites/okGhoomer.jpg";
+var logo = new Image();
+logo.src = "sprites/logo.jpg";
 var timeO;
 var gameState = 'menu';
 var checked;
@@ -52,7 +54,7 @@ function startGame()
      console.log(i);
      j = parseInt((Math.random())*7);
      console.log(j);
-     if(a1[i][j] == 100)
+     if(a1[i][j] >= 100)
      {
          k--;
      }
@@ -88,13 +90,17 @@ function startGame()
 function startMenu()
 {  
     ctx.beginPath();
-    ctx.rect(100, 225, 300, 50);
+    ctx.drawImage(logo, 150, 50, 200, 200);  
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(100, 275, 300, 50);
     ctx.fillStyle = "#FFFFFF";
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.rect(100, 300, 300, 50);
+    ctx.rect(100, 350, 300, 50);
     ctx.fillStyle = "#FFFFFF";
     ctx.fill();
     ctx.closePath();
@@ -102,7 +108,7 @@ function startMenu()
     ctx.beginPath();
     ctx.font = "40px Arial";
     ctx.fillStyle = "#000000";
-    ctx.fillText('Start', 200, 262.5);
+    ctx.fillText('Start', 200, 312.5);
     ctx.closePath();
     gameState = "menu";
 }
@@ -161,7 +167,7 @@ canvas.addEventListener("mousedown", function(e)
     {
     
      case 'menu' :
-         if(x >= 100 && x <= 400 && y >= 225 && y <= 275)
+         if(x >= 100 && x <= 400 && y >= 275 && y <= 325)
          {
              startGame();
              gameState = 'playing';             
@@ -241,7 +247,9 @@ canvas.addEventListener("mousedown", function(e)
         case 'playingRight' :
             if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
             {
+                gameState = 'playing';
                 startGame();
+
             }
             if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
             {
