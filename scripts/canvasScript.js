@@ -99,11 +99,7 @@ function startMenu()
     ctx.fill();
     ctx.closePath();
 
-    ctx.beginPath();
-    ctx.rect(100, 350, 300, 50);
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fill();
-    ctx.closePath();
+    
 
     ctx.beginPath();
     ctx.font = "40px Arial";
@@ -121,9 +117,35 @@ function success()
     ctx.beginPath();
     ctx.font = "40px Arial";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("Badhai ho!!!", 100,40);
+    
+    var highscore = window.localStorage.getItem('highscore');
+    if(highscore == null)
+    {
+        ctx.fillText("New Record!!!", 50,40);
+        window.localStorage.setItem('highscore', timediff);
+    }
+    else if(parseInt(highscore) > timediff)
+    {
+        ctx.fillText("New Record!!!", 50,40);
+        window.localStorage.setItem('highscore', timediff);
+    }
+    else
+    {
+        var mint = parseInt(highscore/60);
+        var sec = highscore%60;
+        ctx.fillText("Best was " + mint + " : " + sec , 50,40);
+    }
+    
     
 }
+
+function endGame()
+{
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Oopsies!!!", 100,40);
+}
+
 
 window.requestAnimationFrame(function clocker()
 {
@@ -190,7 +212,11 @@ canvas.addEventListener("mousedown", function(e)
         }
         if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
         {
-            if(a1[ix - 1][jx - 1] >= 100)
+            if(a1[ix - 1][jx - 1] >= 1000)
+            {
+                //dont do nothing
+            }
+            else if(a1[ix - 1][jx - 1] >= 100)
             {
                 for(ix = 1; ix <= 8; ix++)
                 {
@@ -206,6 +232,7 @@ canvas.addEventListener("mousedown", function(e)
                             ctx.closePath();
                             ctx.drawImage(img, 50*ix, 50*jx, 45, 45);
                             gameState = "failure";
+                            endGame();
                         }
                         else
                         {
@@ -234,6 +261,7 @@ canvas.addEventListener("mousedown", function(e)
                 ctx.fillStyle = "#ffffff"
                 ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
                 ctx.closePath();
+                a1[ix - 1][jx - 1] = 1000
                 checked++;
                 if(checked == 54)
                 {
@@ -248,12 +276,16 @@ canvas.addEventListener("mousedown", function(e)
             if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
             {
                 gameState = 'playing';
-                startGame();
+                startGame(); 
 
             }
             if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
             {
-                if(flagChecker[ix - 1][jx - 1] == 0)
+                if(a1[ix - 1][jx - 1] >= 1000)
+                {
+                //dont do nothing
+                }
+                else if(flagChecker[ix - 1][jx - 1] == 0)
                 {
                     if(flagsrem == 0)
                     {
@@ -295,6 +327,14 @@ canvas.addEventListener("mousedown", function(e)
             break;
 
         case 'failure' :
+            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+            {
+                startGame();
+                gameState = 'playing';
+            }
+            break;
+
+        case 'success':
             if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
             {
                 startGame();
