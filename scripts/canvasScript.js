@@ -228,6 +228,7 @@ canvas.addEventListener("mousedown", function(e)
                         }
                         else if(a1[ix - 1][jx - 1] >= 100)
                         {
+                            console.log("Babe re!!!");
                             ctx.beginPath();
                             ctx.rect(50*ix, 50*jx, 45, 45);
                             ctx.fillStyle = "#000000";
