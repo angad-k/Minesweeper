@@ -222,7 +222,11 @@ canvas.addEventListener("mousedown", function(e)
                 {
                     for(jx = 1; jx <= 8; jx++)
                     {
-                        if(a1[ix - 1][jx - 1] >= 100)
+                        if(a1[ix - 1][jx - 1] >= 1000)
+                        {
+                        //dont do nothing
+                        }
+                        else if(a1[ix - 1][jx - 1] >= 100)
                         {
                             ctx.beginPath();
                             ctx.rect(50*ix, 50*jx, 45, 45);
