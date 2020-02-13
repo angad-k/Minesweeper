@@ -143,7 +143,7 @@ function endGame()
 {
     ctx.font = "40px Arial";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("Oopsies!!", 100,40);
+    ctx.fillText("Oopsies!!!", 100,40);
 }
 
 
