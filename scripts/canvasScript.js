@@ -1,5 +1,10 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
+var canvas;
+var ctx;
+loadCanvas()
+{
+    canvas = document.getElementById("myCanvas");
+    ctx = canvas.getContext("2d");
+}
 var a1 = new Array(8);
 var flagChecker = new Array(8);
 var img = new Image();
