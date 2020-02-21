@@ -18,6 +18,19 @@ var checked;
 var flagsrem;
 function startGame()
 {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     checked = 0;
     flagsrem = 10;
     var today = new Date();
@@ -89,6 +102,29 @@ function startGame()
 }
 function startMenu()
 {  
+    
+    
+    
+    //test
+    canvas = document.getElementById("myCanvas");
+    ctx = canvas.getContext("2d");
+    a1 = new Array(8);
+    flagChecker = new Array(8);
+    img = new Image();
+    img.src = "sprites/bum.png";
+    flag = new Image();
+    flag.src = "sprites/red.png";
+    flagun = new Image();
+    flagun.src = "sprites/redun.png";
+    reload = new Image();
+    reload.src = "sprites/okGhoomer.jpg";
+    logo = new Image();
+    gameState = 'menu';
+    //test
+    
+    
+    
+    
     ctx.beginPath();
     ctx.drawImage(logo, 150, 50, 200, 200);  
     ctx.closePath();
