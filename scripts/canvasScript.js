@@ -105,22 +105,7 @@ function startMenu()
     
     
     
-    //test
-    canvas = document.getElementById("myCanvas");
-    ctx = canvas.getContext("2d");
-    a1 = new Array(8);
-    flagChecker = new Array(8);
-    img = new Image();
-    img.src = "sprites/bum.png";
-    flag = new Image();
-    flag.src = "sprites/red.png";
-    flagun = new Image();
-    flagun.src = "sprites/redun.png";
-    reload = new Image();
-    reload.src = "sprites/okGhoomer.jpg";
-    logo = new Image();
-    gameState = 'menu';
-    //test
+  
     
     
     
