@@ -18,19 +18,6 @@ var checked;
 var flagsrem;
 function startGame()
 {
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     checked = 0;
     flagsrem = 10;
     var today = new Date();
@@ -102,14 +89,6 @@ function startGame()
 }
 function startMenu()
 {  
-    
-    
-    
-  
-    
-    
-    
-    
     ctx.beginPath();
     ctx.drawImage(logo, 150, 50, 200, 200);  
     ctx.closePath();
@@ -371,5 +350,3 @@ canvas.addEventListener("mousedown", function(e)
     }
     
 }); 
-
-    
