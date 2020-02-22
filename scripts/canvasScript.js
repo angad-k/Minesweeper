@@ -5,6 +5,189 @@ function loadCanvas()
     canvas = document.getElementById("myCanvas");
     ctx = canvas.getContext("2d");
     startMenu();
+    
+//idhar paste kiya
+    canvas.addEventListener("mousedown", function(e) 
+{ 
+    let rect = canvas.getBoundingClientRect(); 
+    let x = event.clientX - rect.left; 
+    let y = event.clientY - rect.top;  
+    var ix = parseInt((x - 1)/50);
+    console.log(ix);
+    var jx = parseInt((y - 1)/50);
+    console.log(jx);
+    
+    switch(gameState)
+    {
+    
+     case 'menu' :
+         if(x >= 100 && x <= 400 && y >= 275 && y <= 325)
+         {
+             startGame();
+             gameState = 'playing';             
+         }
+
+         break;
+        
+    
+     case 'playing' :
+        if(x >= 400 && x <= 445 && y >= 450 && y <= 495)
+        {
+            gameState = 'playingRight';
+            ctx.beginPath();
+            ctx.drawImage(flag, 400, 450, 45, 45);    
+            ctx.closePath();
+        }
+        if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+        {
+            startGame();
+        }
+        if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
+        {
+            if(a1[ix - 1][jx - 1] >= 1000)
+            {
+                //dont do nothing
+            }
+            else if(a1[ix - 1][jx - 1] >= 100)
+            {
+                for(ix = 1; ix <= 8; ix++)
+                {
+                    for(jx = 1; jx <= 8; jx++)
+                    {
+                        if(a1[ix - 1][jx - 1] >= 1000)
+                        {
+                        //dont do nothing
+                        }
+                        else if(a1[ix - 1][jx - 1] >= 100)
+                        {
+                            console.log("Babe re!!!");
+                            ctx.beginPath();
+                            ctx.rect(50*ix, 50*jx, 45, 45);
+                            ctx.fillStyle = "#000000";
+                            console.log("ithe");
+                            ctx.fill();
+                            ctx.closePath();
+                            ctx.drawImage(img, 50*ix, 50*jx, 45, 45);
+                            gameState = "failure";
+                            endGame();
+                        }
+                        else
+                        {
+                            ctx.beginPath();
+                            ctx.rect(50*ix, 50*jx, 45, 45);
+                            ctx.fillStyle = "#000000";
+                            console.log("tithe");
+                            ctx.fill();
+                            ctx.font = "45px Arial";
+                            ctx.fillStyle = "#ffffff"
+                            ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
+                            ctx.closePath();
+                            
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ctx.beginPath();
+                ctx.rect(50*ix, 50*jx, 45, 45);
+                ctx.fillStyle = "#000000";
+                console.log("tithe");
+                ctx.fill();
+                ctx.font = "45px Arial";
+                ctx.fillStyle = "#ffffff"
+                ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
+                ctx.closePath();
+                a1[ix - 1][jx - 1] = 1000
+                checked++;
+                if(checked == 54)
+                {
+                    gameState = "success";
+                    success();
+                }
+            }
+        
+        }
+        break;
+        case 'playingRight' :
+            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+            {
+                gameState = 'playing';
+                startGame(); 
+
+            }
+            if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
+            {
+                if(a1[ix - 1][jx - 1] >= 1000)
+                {
+                //dont do nothing
+                }
+                else if(flagChecker[ix - 1][jx - 1] == 0)
+                {
+                    if(flagsrem == 0)
+                    {
+                        break;
+                    }
+                    ctx.beginPath();
+                    ctx.rect(50*ix, 50*jx, 45, 45);
+                    ctx.fillStyle = "#000000";
+                    console.log("ithe");
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.drawImage(flag, 50*ix, 50*jx, 45, 45);
+                    flagChecker[ix - 1][jx - 1] = 1;
+                    flagsrem--;
+                    break;
+                }
+                else
+                {
+                    
+                    ctx.beginPath();
+                    ctx.rect(50*ix, 50*jx, 45, 45);
+                    ctx.fillStyle = "#FF0000";
+                    ctx.fill();
+                    ctx.closePath();
+                    flagChecker[ix - 1][jx - 1] = 0;
+                    flagsrem++;
+                    
+                    break;
+                }
+                
+            }
+            if(x >= 400 && x <= 445 && y >= 450 && y <= 495)
+            {
+                gameState = 'playing';
+                ctx.beginPath();
+                ctx.drawImage(flagun, 400, 450, 45, 45);    
+                ctx.closePath();
+            }
+            break;
+
+        case 'failure' :
+            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+            {
+                startGame();
+                gameState = 'playing';
+            }
+            break;
+
+        case 'success':
+            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
+            {
+                startGame();
+                gameState = 'playing';
+            }
+            break;
+            
+    }
+    
+}); 
+    
+//idhar tak
+    
+    
+    
+    
 }
 var a1 = new Array(8);
 var flagChecker = new Array(8);
@@ -181,178 +364,4 @@ window.requestAnimationFrame(function clocker()
 
 
 
-canvas.addEventListener("mousedown", function(e) 
-{ 
-    let rect = canvas.getBoundingClientRect(); 
-    let x = event.clientX - rect.left; 
-    let y = event.clientY - rect.top;  
-    var ix = parseInt((x - 1)/50);
-    console.log(ix);
-    var jx = parseInt((y - 1)/50);
-    console.log(jx);
-    
-    switch(gameState)
-    {
-    
-     case 'menu' :
-         if(x >= 100 && x <= 400 && y >= 275 && y <= 325)
-         {
-             startGame();
-             gameState = 'playing';             
-         }
 
-         break;
-        
-    
-     case 'playing' :
-        if(x >= 400 && x <= 445 && y >= 450 && y <= 495)
-        {
-            gameState = 'playingRight';
-            ctx.beginPath();
-            ctx.drawImage(flag, 400, 450, 45, 45);    
-            ctx.closePath();
-        }
-        if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
-        {
-            startGame();
-        }
-        if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
-        {
-            if(a1[ix - 1][jx - 1] >= 1000)
-            {
-                //dont do nothing
-            }
-            else if(a1[ix - 1][jx - 1] >= 100)
-            {
-                for(ix = 1; ix <= 8; ix++)
-                {
-                    for(jx = 1; jx <= 8; jx++)
-                    {
-                        if(a1[ix - 1][jx - 1] >= 1000)
-                        {
-                        //dont do nothing
-                        }
-                        else if(a1[ix - 1][jx - 1] >= 100)
-                        {
-                            console.log("Babe re!!!");
-                            ctx.beginPath();
-                            ctx.rect(50*ix, 50*jx, 45, 45);
-                            ctx.fillStyle = "#000000";
-                            console.log("ithe");
-                            ctx.fill();
-                            ctx.closePath();
-                            ctx.drawImage(img, 50*ix, 50*jx, 45, 45);
-                            gameState = "failure";
-                            endGame();
-                        }
-                        else
-                        {
-                            ctx.beginPath();
-                            ctx.rect(50*ix, 50*jx, 45, 45);
-                            ctx.fillStyle = "#000000";
-                            console.log("tithe");
-                            ctx.fill();
-                            ctx.font = "45px Arial";
-                            ctx.fillStyle = "#ffffff"
-                            ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
-                            ctx.closePath();
-                            
-                        }
-                    }
-                }
-            }
-            else
-            {
-                ctx.beginPath();
-                ctx.rect(50*ix, 50*jx, 45, 45);
-                ctx.fillStyle = "#000000";
-                console.log("tithe");
-                ctx.fill();
-                ctx.font = "45px Arial";
-                ctx.fillStyle = "#ffffff"
-                ctx.fillText(a1[ix - 1][jx - 1], 10 + 50*ix,40 + 50*jx);
-                ctx.closePath();
-                a1[ix - 1][jx - 1] = 1000
-                checked++;
-                if(checked == 54)
-                {
-                    gameState = "success";
-                    success();
-                }
-            }
-        
-        }
-        break;
-        case 'playingRight' :
-            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
-            {
-                gameState = 'playing';
-                startGame(); 
-
-            }
-            if(ix <= 8 && jx <=8 && ix >= 1 && jx >= 1)
-            {
-                if(a1[ix - 1][jx - 1] >= 1000)
-                {
-                //dont do nothing
-                }
-                else if(flagChecker[ix - 1][jx - 1] == 0)
-                {
-                    if(flagsrem == 0)
-                    {
-                        break;
-                    }
-                    ctx.beginPath();
-                    ctx.rect(50*ix, 50*jx, 45, 45);
-                    ctx.fillStyle = "#000000";
-                    console.log("ithe");
-                    ctx.fill();
-                    ctx.closePath();
-                    ctx.drawImage(flag, 50*ix, 50*jx, 45, 45);
-                    flagChecker[ix - 1][jx - 1] = 1;
-                    flagsrem--;
-                    break;
-                }
-                else
-                {
-                    
-                    ctx.beginPath();
-                    ctx.rect(50*ix, 50*jx, 45, 45);
-                    ctx.fillStyle = "#FF0000";
-                    ctx.fill();
-                    ctx.closePath();
-                    flagChecker[ix - 1][jx - 1] = 0;
-                    flagsrem++;
-                    
-                    break;
-                }
-                
-            }
-            if(x >= 400 && x <= 445 && y >= 450 && y <= 495)
-            {
-                gameState = 'playing';
-                ctx.beginPath();
-                ctx.drawImage(flagun, 400, 450, 45, 45);    
-                ctx.closePath();
-            }
-            break;
-
-        case 'failure' :
-            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
-            {
-                startGame();
-                gameState = 'playing';
-            }
-            break;
-
-        case 'success':
-            if(x >= 350 && x <= 395 && y >= 450 && y <= 495)
-            {
-                startGame();
-                gameState = 'playing';
-            }
-            break;
-            
-    }
-    
-}); 
