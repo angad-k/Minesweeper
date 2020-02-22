@@ -4,6 +4,7 @@ function loadCanvas()
 {
     canvas = document.getElementById("myCanvas");
     ctx = canvas.getContext("2d");
+    startMenu();
 }
 var a1 = new Array(8);
 var flagChecker = new Array(8);
