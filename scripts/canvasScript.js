@@ -1,6 +1,6 @@
 var canvas;
 var ctx;
-loadCanvas()
+function loadCanvas()
 {
     canvas = document.getElementById("myCanvas");
     ctx = canvas.getContext("2d");
